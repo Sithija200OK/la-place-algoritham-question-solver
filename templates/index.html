@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Laplace Transform Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- MathJax for rendering math expressions -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Advanced Laplace Transform Calculator</h2>
+
+        <form method="POST">
+            <label for="expression">Enter function:</label><br>
+            <input type="text" name="expression" placeholder="Example: t*exp(-2*t)" required value="{{ expression }}"><br>
+
+            <label for="transform_type">Choose transform type:</label><br>
+            <select name="transform_type">
+                <option value="laplace" {% if transform_type == 'laplace' %}selected{% endif %}>Laplace Transform</option>
+                <option value="inverse" {% if transform_type == 'inverse' %}selected{% endif %}>Inverse Laplace Transform</option>
+            </select><br><br>
+
+            <button type="submit">Compute</button>
+        </form>
+
+        {% if result %}
+            <div class="result">
+                <h3>Result:</h3>
+                <p>\\[ {{ result|safe }} \\]</p>
+                {% if steps %}
+                    <h4>Calculation Steps:</h4>
+                    <p>{{ steps }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
